@@ -7,8 +7,8 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({extended: true}))
 
-router.use('/', productRoutes);
-router.use('/', cartRoutes);
+router.use('/products', productRoutes);
+router.use('/cart', cartRoutes);
 
 
 

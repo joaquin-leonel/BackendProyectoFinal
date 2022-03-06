@@ -1,4 +1,5 @@
-const productsList = [
+
+let productsList = [
     {   
         id: '1',
         name: 'procesador intel i7',
@@ -38,6 +39,56 @@ const productsList = [
     
 ];
 
+function addProduct(name, description, price, img, cod, stock){
+    const findId = productsList.map(item => item.id); 
+    let newId; 
+    if(findId.length == 0) newId = 1; 
+    else newId = Math.max.apply(null, findId) + 1;
+
+    const newProduct = {
+        id: newId,
+        name: name,
+        description: description,
+        price: price,
+        img: img,
+        cod: cod,
+        stock: stock
+    };
+
+    productsList.push(newProduct);
+}
+
+function getById(id){
+    return productsList.find(e => e.id === id);
+}
+
+function getAll(){
+    return productsList;
+}
+
+function updateByIndex(productIndex, name, description, price, img, cod, stock){
+    const newProduct = {
+        ...productsList[productIndex],
+        name: name,
+        description: description,
+        price: price,
+        img: img,
+        cod: cod,
+        stock: stock,
+    };
+    productsList[productIndex] = newProduct;
+    return newProduct;
+}
+
+function deleteByIndex(productIndex){
+    productsList.splice(productIndex, 1);
+}
+
 module.exports = {
     productsList,
+    getAll,
+    getById,
+    addProduct,
+    updateByIndex,
+    deleteByIndex,
 };

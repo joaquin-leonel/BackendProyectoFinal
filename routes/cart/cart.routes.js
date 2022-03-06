@@ -1,14 +1,39 @@
 const express = require('express');
-const { cartList } = require('../../data/cartApi');
+const { cartList, Cart, addCart, deleteCart, getFromCart, addToCart, deleteFromCart} = require('../../data/cartApi');
+const { getById } = require('../../data/productsApi');
+
 
 const router = express.Router();
 
-router.get( '/cart', (req, res) => {
-    return res.send(cartList);
-
+router.post( '/', (req, res) => {
+    addCart();
+    return res.send();
 })
 
-router.get( '/products/:id', (req, res) => {
+router.delete( '/:id', (req, res) => {
+    const { params: { id } }  = req
+    deleteCart(id);
+})
+
+router.get('/:id/products', (req, res) => {
+    const { params: { id } }  = req
+    const products = getFromCart(id);
+    return res.send(products);
+})
+
+router.post('/:id/products/:id_product', (req, res) => {
+    const { params: { id, id_product } }  = req
+    addToCart(parseInt(id), parseInt(id_product));
+})
+
+router.delete('/:id/products/:id_product', (req, res) => {
+    const { params: { id, id_product } }  = req   
+    deleteFromCart(id, id_product); 
+})
+
+
+
+router.get( '/cart/:id', (req, res) => {
     const { id } = req.params;
 
     if(id) {
